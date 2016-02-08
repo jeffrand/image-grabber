@@ -6,7 +6,7 @@ reqs = [str(ir.req) for ir in install_reqs]
 
 setup(
     name='image_grabber',
-    version='1.0.2',
+    version='1.0.3',
     description='Grab the first page of images from Bing Image search.',
     author='Jeff Rand',
     author_email='jeffreyrand@gmail.com',
