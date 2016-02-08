@@ -1,0 +1,21 @@
+#! /usr/bin/env python
+
+import argparse
+from image_grabber import mkdir, make_request, parse_response, store_image_href
+
+parser = argparse.ArgumentParser(description='Download images from Bing Search')
+parser.add_argument('search_for', help='search for these terms', nargs='+')
+parser.add_argument('-d', '--dir_name', help='Target director name')
+
+args = parser.parse_args()
+
+
+if __name__ == '__main__':
+    search_for, dir_name = ' '.join(args.search_for), args.dir_name
+    if not dir_name:
+       dir_name = search_for
+
+    mkdir(dir_name)
+    response_text = make_request(search_for)
+    for href in parse_response(response_text):
+        store_image_href(href, dir_name)

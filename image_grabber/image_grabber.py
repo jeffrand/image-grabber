@@ -1,32 +1,13 @@
-#! /usr/bin/env python
-
 import os
 from time import time
 
 from lxml import html
 import requests
-import argparse
-
-parser = argparse.ArgumentParser(description='Download images from Bing Search')
-parser.add_argument('search_for', help='search for these terms', nargs='+')
-parser.add_argument('-d', '--dir_name', help='Target director name')
-
-args = parser.parse_args()
 
 BASE_URL = 'http://www.bing.com/images/search'
 BASE_PAYLOAD = {
     'qft': '+filterui:imagesize-large',
 }
-
-
-def main(search_for, dir_name=None):
-    if not dir_name:
-        dir_name = search_for
-
-    mkdir(dir_name)
-    response_text = make_request(search_for)
-    for href in parse_response(response_text):
-        store_image_href(href, dir_name)
 
 
 def make_request(search_for):
@@ -68,6 +49,3 @@ def store_image_href(href, dir_name):
     with open(path, 'wb') as f:
         for chunk in r.iter_content(1024):
             f.write(chunk)
-
-if __name__ == '__main__':
-    main(' '.join(args.search_for), args.dir_name)
